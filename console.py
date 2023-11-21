@@ -137,8 +137,7 @@ class HBNBCommand(cmd.Cmd):
                     except ValueError:
                         continue
                 else:
-                    try:
-                        value = int(value)
+                    value = int(value)
                 dic1 = {key: value}
                 kwargs.update(dic1)
         for key, value in kwargs.items():
