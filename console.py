@@ -128,10 +128,10 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) > 1:
             for i in range(1, len(arg)):
                 key, value = arg[i].split("=")
-                if value[0] == "\"" :
+                if value[0] == '\"':
                     value = value.replace('"', '')
-                    value = value.replace("_", " ")
-                elif "." in value:
+                    value = value.replace('_', ' ')
+                elif '.' in value:
                     try:
                         value = float(value)
                     except ValueError:
@@ -139,8 +139,6 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     try:
                         value = int(value)
-                    except ValueError:
-                        continue
                 dic1 = {key: value}
                 kwargs.update(dic1)
         for key, value in kwargs.items():
