@@ -135,12 +135,12 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         value = float(value)
                     except ValueError:
-                        return
+                        continue
                 else:
                     try:
                         value = int(value)
                     except ValueError:
-                        return
+                        continue
                 dic1 = {key: value}
                 kwargs.update(dic1)
         for key, value in kwargs.items():
