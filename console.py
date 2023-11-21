@@ -127,11 +127,23 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[arg[0]]()
         if len(arg) > 1:
             for i in range(1, len(arg)):
-                if not self.val_value_syntax(arg[i]):
-                    return
+                key, value = arg[i].split("=")
+                if value[0] == "\"" and value[-1] == "\"":
+                    str_val = value[1:-1]
+                    value = str_val.replace('"', '')
+                    value = value.replace("_", " ")
+                elif "." in value:
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        return
                 else:
-                    dic1 = self.val_value_syntax(arg[i])
-                    kwargs.update(dic1)
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        return
+                dic1 = {key: value}
+                kwargs.update(dic1)
         new_instance.__dict__.update(kwargs)
         storage.save()
         print(new_instance.id)
@@ -330,25 +342,6 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
-
-    @staticmethod
-    def val_value_syntax(ky_val):
-        key, value = ky_val.split("=")
-        if value[0] == "\"" and value[-1] == "\"":
-            str_val = value[1:-1]
-            value = str_val.replace('"', '')
-            value = value.replace("_", " ")
-        elif "." in value:
-            try:
-                value = float(value)
-            except ValueError:
-                return False
-        else:
-            try:
-                value = int(value)
-            except ValueError:
-                return False
-        return {key: value}
 
 
 if __name__ == "__main__":
