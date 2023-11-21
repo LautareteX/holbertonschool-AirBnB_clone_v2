@@ -132,10 +132,7 @@ class HBNBCommand(cmd.Cmd):
                     value = value.replace('"', '')
                     value = value.replace('_', ' ')
                 elif '.' in value:
-                    try:
-                        value = float(value)
-                    except ValueError:
-                        continue
+                    value = float(value)
                 else:
                     value = int(value)
                 dic1 = {key: value}
