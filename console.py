@@ -128,9 +128,10 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) > 1:
             for i in range(1, len(arg)):
                 key, value = arg[i].split("=")
-                value = value.replace('"', '')
-                value = value.replace("_", " ")
-                if "." in value:
+                if value[0] == "\"" :
+                    value = value.replace('"', '')
+                    value = value.replace("_", " ")
+                elif "." in value:
                     try:
                         value = float(value)
                     except ValueError:
