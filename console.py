@@ -334,13 +334,10 @@ class HBNBCommand(cmd.Cmd):
     @staticmethod
     def val_value_syntax(ky_val):
         key, value = ky_val.split("=")
-        if value[0] and value[-1] == "\"":
+        if value[0]== "\"" and value[-1] == "\"":
             str_val = value[1:-1]
-            for i in range(len(str_val)):
-                if str_val[i] == "\"" and str_val[i - 1] != "\\":
-                    return False
             value = str_val
-            value = value.replace("_", " ")
+            value = value.replace("_", " ").replace('\"', )
         elif "." in value:
             try:
                 value = float(value)
