@@ -115,13 +115,36 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        arg = args.split()
+        if len(arg) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+
+        new_instance = HBNBCommand.classes[arg[0]]()
+        if len(arg) > 1:
+            if not self.val_value_syntax(arg[1]):
+                return
+            else:
+                ls1 = self.val_value_syntax(arg[1])
+                setattr(new_instance, ls1[0], ls1[1])
+        if len(arg) > 2:
+            if not self.val_value_syntax(arg[2]):
+                return
+            else:
+                ls2 = self.val_value_syntax(arg[2])
+                print(type(ls2[1]))
+                setattr(new_instance, ls2[0], ls2[1])
+        if len(arg) == 4:
+            if not self.val_value_syntax(arg[3]):
+                return
+            else:
+                ls3 = self.val_value_syntax(arg[3])
+                print(type(ls3[1]))
+                setattr(new_instance, ls3[0], ls3[1])
+
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -319,6 +342,29 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+    @staticmethod
+    def val_value_syntax(ky_val):
+        key, value = ky_val.split("=")
+        if value[0] and value[-1] == "\"":
+            str_val = value[1:-1]
+            for i in range(len(str_val)):
+                if str_val[i] == "\"" and str_val[i - 1] != "\\":
+                    return False
+            value = str_val
+            value = value.replace("_", " ")
+        elif "." in value:
+            try:
+                value = float(value)
+            except ValueError:
+                return False
+        else:
+            try:
+                value = int(value)
+            except ValueError:
+                return False
+        return [key, value]
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
