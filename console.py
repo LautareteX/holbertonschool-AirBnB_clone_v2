@@ -145,6 +145,8 @@ class HBNBCommand(cmd.Cmd):
                 dic1 = {key: value}
                 kwargs.update(dic1)
         new_instance.__dict__.update(kwargs)
+        for key, value in kwargs.items():
+            setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
         storage.save()
