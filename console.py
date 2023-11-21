@@ -145,8 +145,9 @@ class HBNBCommand(cmd.Cmd):
                 kwargs.update(dic1)
         for key, value in kwargs.items():
             setattr(new_instance, key, value)
-        new_instance.save()
+        storage.save()
         print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
