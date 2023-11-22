@@ -61,4 +61,5 @@ class FileStorage:
         """delete a specified object"""
         if obj:
             rmkey = obj.to_dict()['__class__'] + '.' + obj.id
-            del(FileStorage.__objects[rmkey])
+            if rmkey in self.__objects:
+                del(FileStorage.__objects[rmkey])
