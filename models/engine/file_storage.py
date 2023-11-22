@@ -10,11 +10,11 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        newdic = FileStorage.__objects.copy()
+        newdic = {}
         if cls:
             for key in FileStorage.__objects.keys():
-                if cls != type(FileStorage.__objects[key]):
-                    del(newdic[key])
+                if cls == type(FileStorage.__objects[key]):
+                    newdic.update({key: FileStorage.__objects[key]})
             return newdic
         else:
             return FileStorage.__objects
