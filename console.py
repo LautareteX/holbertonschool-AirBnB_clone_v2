@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
                         value = float(value)
                     except ValueError:
                         pass
-            setattr(new_instance, str(name), value)
+            setattr(new_instance, name, value)
         storage.save()
         new_instance.save()
         print(new_instance.id)
