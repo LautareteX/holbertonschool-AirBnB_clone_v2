@@ -146,8 +146,8 @@ class HBNBCommand(cmd.Cmd):
         for key, value in kwargs.items():
             setattr(new_instance, key, value)
         storage.save()
-        print(new_instance.id)
         new_instance.save()
+        print(new_instance.id)
         storage.save()
 
     def help_create(self):
