@@ -115,35 +115,37 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        arg = args.split()
-        attrs = arg[1:]
-        if len(args) == 0:
+        if not args:
             print("** class name missing **")
             return
-        elif arg[0] not in HBNBCommand.classes:
+        arg_lst = args.split()
+        if arg_lst[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[arg[0]]()
-        for i in attrs:
-            key, value = i.split('=')
-            key = str(key)
-            if len(value) > 1:
-                if value[0] == '"':
-                    try:
-                        value = value.replace('"', "")
-                        if '_' in value:
-                            value = value.replace('_', ' ')
-                    except Exception:
-                        continue
-                else:
-                    try:
-                        value = int(value)
-                    except Exception:
-                        try:
-                            value = float(value)
-                        except Exception:
-                            continue
-                setattr(new_instance, key, value)
+
+        new_instance = HBNBCommand.classes[arg_lst[0]]()
+
+        for arg in arg_lst[1:]:
+            try:
+                key, value = arg.split('=')
+            except Exception:
+                pass
+
+            if value[0] == '\"':
+                value = value.replace('\"','').replace('_', ' ')
+            elif '.' in value:
+                try:
+                    value = float(value)
+                except Exception:
+                    pass
+            else:
+                try:
+                    value = int(value)
+                except Exception:
+                    pass
+
+            setattr(new_instance, key, value)
+
         storage.save()
         new_instance.save()
         print(new_instance.id)
