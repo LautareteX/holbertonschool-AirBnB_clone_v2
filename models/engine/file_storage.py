@@ -18,7 +18,6 @@ class FileStorage:
             if cls == type(val):
                 newdic.update({key: val})
         return newdic
-            
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -63,4 +62,3 @@ class FileStorage:
             rmkey = obj.to_dict()['__class__'] + '.' + obj.id
             if rmkey in self.__objects:
                 del(FileStorage.__objects[rmkey])
-                self.save()
