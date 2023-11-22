@@ -131,8 +131,8 @@ class HBNBCommand(cmd.Cmd):
             except Exception:
                 pass
 
-            if value[0] == '\"':
-                value = value.replace('\"','').replace('_', ' ')
+            if value[0] == '"':
+                value = value.replace('"','').replace('_', ' ')
             elif '.' in value:
                 try:
                     value = float(value)
