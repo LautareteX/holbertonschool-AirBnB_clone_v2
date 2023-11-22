@@ -14,7 +14,7 @@ class FileStorage:
             return FileStorage.__objects
 
         newdic = {}
-        for key, val in FileStorage.__objects.items():
+        for key, val in self.__objects.items():
             if cls == type(val):
                 newdic.update({key: val})
         return newdic
