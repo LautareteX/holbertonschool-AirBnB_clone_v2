@@ -12,9 +12,9 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         newdic = {}
         if cls:
-            for key in FileStorage.__objects.keys():
-                if cls == type(FileStorage.__objects[key]):
-                    newdic.update({key: FileStorage.__objects[key]})
+            for key val in FileStorage.__objects.items():
+                if cls == type(val):
+                    newdic.update({key: val})
             return newdic
         else:
             return FileStorage.__objects
@@ -60,8 +60,4 @@ class FileStorage:
         """delete a specified object"""
         rm_keys = []
         if obj:
-            for key in self.__objects.keys():
-                if obj.id in key:
-                    rm_keys.append(key)
-            for key in rm_keys:
-                del(self.__objects[key])
+            del(FileStorage.__objects[obj.to_dict()['__class__'] + '.' + obj.id])
