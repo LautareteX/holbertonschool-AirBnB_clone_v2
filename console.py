@@ -132,15 +132,22 @@ class HBNBCommand(cmd.Cmd):
                     value = value.replace('"', '')
                     value = value.replace('_', ' ')
                 elif '.' in value:
-                    value = float(value)
+                    try:
+                        value = float(value)
+                    except ValueError:
+                        continue
                 else:
-                    value = int(value)
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        continue
                 dic1 = {key: value}
                 kwargs.update(dic1)
         for key, value in kwargs.items():
             setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
+        new_instance.save()
         storage.save()
 
     def help_create(self):
