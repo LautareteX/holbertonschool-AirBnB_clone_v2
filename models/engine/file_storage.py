@@ -13,7 +13,7 @@ class FileStorage:
         newdic = FileStorage.__objects.copy()
         if cls:
             for key in FileStorage.__objects.keys():
-                if cls is not isinstance(FileStorage.__objects[key]):
+                if cls != type(FileStorage.__objects[key]):
                     del(newdic[key])
             return newdic
         else:
