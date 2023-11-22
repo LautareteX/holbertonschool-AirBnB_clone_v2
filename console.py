@@ -115,40 +115,30 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        arg = args.split( )
         if not args:
             print("** class name missing **")
             return
-        arg_lst = args.split()
-        if arg_lst[0] not in HBNBCommand.classes:
+        elif arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-
-        new_instance = HBNBCommand.classes[arg_lst[0]]()
-
-        for arg in arg_lst[1:]:
-            try:
-                key, value = arg.split('=')
-            except Exception:
-                pass
-
+        new_instance = HBNBCommand.classes[args]()
+        for arg in args[1:]:
+            name, value = arg.split('=')
             if value[0] == '"':
-                value = value.replace('"','').replace('_', ' ')
-            elif '.' in value:
-                try:
-                    value = float(value)
-                except Exception:
-                    pass
+                value = value.replace('"', '').replace('_', ' ')
             else:
                 try:
-                    value = int(value)
-                except Exception:
-                    pass
-
-            setattr(new_instance, key, value)
-
-        storage.new(new_instance)
+                    int(value)
+                except ValueError:
+                    try:
+                        float(value)
+                    except ValueError:
+                        pass
+            setattr(new_instance, str(name), value)
         storage.save()
         print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -245,7 +235,7 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: all <className>\n")
 
     def do_count(self, args):
-        """Count current number of class instances"""   
+        """Count current number of class instances"""
         count = 0
         for k, v in storage._FileStorage__objects.items():
             if args == k.split('.')[0]:
@@ -343,7 +333,6 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
