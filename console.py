@@ -126,6 +126,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         class_name = args[0]
         new_instance = HBNBCommand.classes[class_name]()
+        new_dic = {}
 
         for ar in args[1:]:
             name, value = ar.split('=')
@@ -137,9 +138,10 @@ class HBNBCommand(cmd.Cmd):
 
             else:
                 value = int(value)
-
+            new_dic.update({name: value})
             setattr(new_instance, name, value)
 
+        new_instance.__dict__.update(new_dic)
         storage.save()
         print(new_instance.id)
         storage.save()
