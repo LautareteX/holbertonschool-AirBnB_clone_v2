@@ -63,5 +63,5 @@ class FileStorage:
             for key in self.__objects.keys():
                 if obj.id in key:
                     rm_keys.append(key)
-        for key in rm_keys:
-            del(self.__objects[key])
+            for key in rm_keys:
+                del(self.__objects[key])
