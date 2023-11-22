@@ -113,42 +113,38 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
+    def do_create(self, arg):
+        """ Create an object of any class with atrributes"""
+        if not arg:
             print("** class name missing **")
             return
-        arg_lst = args.split()
-        if arg_lst[0] not in HBNBCommand.classes:
+
+        if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
-        new_instance = HBNBCommand.classes[arg_lst[0]]()
+        args = arg.split()
+        class_name = args[0]
+        new_instance = HBNBCommand.classes[class_name]()
+        new_dic = {}
 
-        for arg in arg_lst[1:]:
-            try:
-                key, value = arg.split('=')
-            except Exception:
-                pass
-
+        for ar in args[1:]:
+            name, value = ar.split('=')
             if value[0] == '\"':
-                value = value.replace('\"','').replace('_', ' ')
+                value = value.replace('"', '').replace('_', ' ')
+
             elif '.' in value:
-                try:
-                    value = float(value)
-                except Exception:
-                    pass
+                value = float(value)
+
             else:
-                try:
-                    value = int(value)
-                except Exception:
-                    pass
+                value = int(value)
+            new_dic.update({name: value})
+            setattr(new_instance, name, value)
 
-            setattr(new_instance, key, value)
-
-        storage.new(new_instance)
-        new_instance.save()
+        new_instance.__dict__.update(new_dic)
+        storage.save()
         print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -245,7 +241,7 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: all <className>\n")
 
     def do_count(self, args):
-        """Count current number of class instances"""   
+        """Count current number of class instances"""
         count = 0
         for k, v in storage._FileStorage__objects.items():
             if args == k.split('.')[0]:
