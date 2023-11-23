@@ -13,11 +13,11 @@ class FileStorage:
         if cls is None:
             return self.__objects
         else:
-            newdict = {}
+            n_dict = {}
             for key, val in self.__objects.items():
                 if isinstance(val, cls):
-                    newdict[key] = val
-            return newdict
+                    n_dict[key] = val
+            return n_dict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -57,7 +57,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """delete a specified object asnjdhbksdnhsdksddnkdsjk"""
+        """ delete a specified object asnjdhbksdnhsdksddnkdsjk"""
         if obj is not None:
             rmkey = obj.__class__.__name__  + '.' + obj.id
             if rmkey in self.__objects:
