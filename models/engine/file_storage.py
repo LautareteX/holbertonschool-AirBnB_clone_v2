@@ -64,3 +64,4 @@ class FileStorage:
             rmkey = f"{obj.__class__.__name__ }.{obj.id}"
             if rmkey in self.__objects:
                 del(FileStorage.__objects[rmkey])
+                self.save()
