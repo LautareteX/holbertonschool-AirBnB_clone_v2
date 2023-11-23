@@ -61,7 +61,6 @@ class FileStorage:
         if obj is None:
             return
         else:
-            rmkey = obj.to_dict()['__class__'] + '.' + obj.id
+            rmkey = f"{obj.__class__.__name__ }.{obj.id}"
             if rmkey in self.__objects:
                 del(FileStorage.__objects[rmkey])
-                self.save()
