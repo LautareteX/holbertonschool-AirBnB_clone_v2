@@ -11,10 +11,10 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is None:
-            return FileStorage.__objects
+            return self.__objects
 
         newdict = {}
-        for key, val in FileStorage.__objects.items():
+        for key, val in self.__objects.items():
             if isinstance(val, cls):
                  newdict[key] = val
         return newdict
@@ -64,4 +64,3 @@ class FileStorage:
             rmkey = f"{obj.__class__.__name__ }.{obj.id}"
             if rmkey in self.__objects:
                 del(FileStorage.__objects[rmkey])
-                self.save()
