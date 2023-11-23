@@ -80,6 +80,9 @@ class test_fileStorage(unittest.TestCase):
         """ Nothing happens if file does not exist """
         self.assertEqual(storage.reload(), None)
 
+    def test_delete(self):
+        ...
+
     def test_base_model_save(self):
         """ BaseModel save method calls storage save """
         new = BaseModel()
