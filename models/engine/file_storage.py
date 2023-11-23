@@ -10,7 +10,6 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        global o_dict
         if cls is None:
             return self.__objects
         else:
@@ -63,3 +62,4 @@ class FileStorage:
             rmkey = obj.__class__.__name__  + '.' + obj.id
             if rmkey in self.__objects:
                 del(self.__objects[rmkey])
+                self.save()
