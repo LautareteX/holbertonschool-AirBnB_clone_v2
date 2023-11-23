@@ -131,7 +131,7 @@ class HBNBCommand(cmd.Cmd):
         for ar in args[1:]:
             name, value = ar.split('=')
             if value[0] == '\"':
-                value = value.replace('"', '').replace('_', ' ')
+                value = value.replace('\"', '').replace('_', ' ')
 
             elif '.' in value:
                 value = float(value)
@@ -143,6 +143,7 @@ class HBNBCommand(cmd.Cmd):
 
         new_instance.__dict__.update(new_dic)
         storage.save()
+        new_instance.save()
         print(new_instance.id)
         storage.save()
 
