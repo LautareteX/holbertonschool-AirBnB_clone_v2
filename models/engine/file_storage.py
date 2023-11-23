@@ -12,12 +12,12 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         if cls is None:
             return self.__objects
-
-        newdict = {}
-        for key, val in self.__objects.items():
-            if isinstance(val, cls):
-                 newdict[key] = val
-        return newdict
+        else:
+            newdict = {}
+            for key, val in self.__objects.items():
+                if isinstance(val, cls):
+                    newdict[key] = val
+            return newdict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -61,6 +61,6 @@ class FileStorage:
         if obj is None:
             return
         else:
-            rmkey = f"{obj.__class__.__name__ }.{obj.id}"
+            rmkey = obj.__class__.__name__  + '.' + obj.id
             if rmkey in self.__objects:
                 del(self.__objects[rmkey])
