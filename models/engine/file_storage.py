@@ -13,11 +13,11 @@ class FileStorage:
         if cls is None:
             return FileStorage.__objects
 
-        newdic = {}
-        for key, val in self.__objects.items():
-            if cls == type(val):
-                newdic.update({key: val})
-        return newdic
+        newdict = {}
+        for key, val in FileStorage.__objects.items():
+            if isinstance(val, cls):
+                 newdict[key] = val
+        return newdict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -61,7 +61,7 @@ class FileStorage:
         if obj is None:
             return
         else:
-            rmkey = obj.to_dict()['__class__'] + '.' + obj.id
+            rmkey = f"{obj.__class__.__name__ }.{obj.id}"
             if rmkey in self.__objects:
                 del(FileStorage.__objects[rmkey])
                 self.save()
