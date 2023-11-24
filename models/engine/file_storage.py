@@ -9,15 +9,14 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a dictionary"""
-        if cls is None:
-            return self.__objects
-        else:
-            fil = {}
-            for k, v in self.__objects.items():
-                if isinstance(v, cls):
-                    fil[k] = v
-            return fil
+        """Returns a dictionary of models currently in storage"""
+        if cls == None:
+            return FileStorage.__objects
+        cls_dict = {}
+        for key, val in FileStorage.__objects.items():
+            if type(val) == cls:
+                cls_dict[key] = val
+        return cls_dict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -30,7 +29,7 @@ class FileStorage:
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
-            json.dump(temp, f)
+            json.dump(temp, f, indent=4)
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -57,8 +56,10 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Delete obj from __objects if it is inside"""
-        if obj is not None:
-            key_rm = obj.__class__.__name__ + "." + obj.id
-            if key_rm in self.__objects:
-                del self.__objects[key_rm]
+        """ Delete obj from __objects """
+        fs = FileStorage()
+        if obj == None:
+            return 
+        key = obj.__class__.__name__ + "." + obj.id
+        if key in fs.__objects:
+            del fs.__objects[key]
