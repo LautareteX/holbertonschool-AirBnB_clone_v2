@@ -25,6 +25,7 @@ class BaseModel :
             for key, value in kwargs.items():
                 if key == 'updated_at' or key == 'created_at':
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                print(type(self))
                 setattr(self, key, value)
             if '__class__' in kwargs:
                 del kwargs['__class__']
