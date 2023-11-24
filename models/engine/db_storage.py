@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone with a databasae"""
+"""This module defines a class to manage \
+file storage for hbnb clone with a databasae"""
 from sqlalchemy import create_engine
 from os import getenv
-from sqlalchemy.orm import metadata
+from sqlalchemy.orm import metadata, sessionmaker
 
 
 class DBStorage:
@@ -24,3 +25,25 @@ class DBStorage:
 
         if getenv('HBNB_ENV') == 'test':
             metadata.drop_all(self.__engine)
+
+    def all(self, cls=None):
+        """Retun instances of a given class or all classes"""
+        obj_dict = {}
+        self.__session = sessionmaker(bind=self.__engine)()
+        if cls is not None:
+            sess_objs = self.__session.query(cls).all()
+            for obj in sess_objs:
+                obj_dict['{}.{}'.format(
+                    obj.__class__.__name__,
+                    obj.id
+                )] = obj
+            return obj_dict
+        else:
+            sess_objs = self.__session.query(cls).all()
+            for obj in sess_objs:
+                if obj.__class__.__name__ != 'BaseModel':
+                    obj_dict['{}.{}'.format(
+                        obj.__class__.__name__,
+                        obj.id
+                    )] = obj
+            return obj_dict
