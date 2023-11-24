@@ -8,7 +8,7 @@ from models import storage
 
 Base = declarative_base()
 
-class BaseModel :
+class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
@@ -22,13 +22,13 @@ class BaseModel :
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
+            if '__class__' in kwargs:
+                del kwargs['__class__']
             for key, value in kwargs.items():
                 if key == 'updated_at' or key == 'created_at':
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                print(type(self))
                 setattr(self, key, value)
-            if '__class__' in kwargs:
-                del kwargs['__class__']
+
 
     def __str__(self):
         """Returns a string representation of the instance"""
