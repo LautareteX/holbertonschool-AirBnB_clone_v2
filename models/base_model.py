@@ -44,11 +44,12 @@ class BaseModel:
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
 
+
 kwargs = {
-        "city_id":"0001",
-        "user_id":"0001",
-        "name":"My_little_house",
-        "number_rooms":4,
-        "longitude":-122.431297,
+        "city_id": "0001",
+        "user_id": "0001",
+        "name": "My_little_house",
+        "number_rooms": 4,
+        "longitude": -122.431297,
     }
 bm = BaseModel(kwargs)
