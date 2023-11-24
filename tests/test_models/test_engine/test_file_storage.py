@@ -81,7 +81,14 @@ class test_fileStorage(unittest.TestCase):
         self.assertEqual(storage.reload(), None)
 
     def test_delete(self):
-        ...
+        # Create a new Basemodel
+        first_ch = storage.all(BaseModel)
+        new_bm = BaseModel()
+        storage.new(new_bm)
+        new_bm.save()
+        storage.delete(new_bm)
+        second_ch = storage.all(BaseModel)
+        self.assertEqual(first_ch, second_ch)
 
     def test_base_model_save(self):
         """ BaseModel save method calls storage save """
