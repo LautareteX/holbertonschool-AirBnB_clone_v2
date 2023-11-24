@@ -2,8 +2,9 @@
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy.orm import relationship, backref
-
+from sqlalchemy.orm import relationship
+from os import getenv
+from models.city import City
 
 class State(BaseModel, Base):
     """ State class """
@@ -11,14 +12,15 @@ class State(BaseModel, Base):
 
     name = Column(String(128), nullable=False)
 
-    cities = relationship("City", backref="state", cascade='all, delete-orphan')
-
-    @property
-    def cities(self):
-        from models import storage
-        c_instances = storage.all("City").values()
-        m_cities = []
-        for i in c_instances:
-            if i.state_id == self.id:
-                m_cities.append(i)
-        return m_cities
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        cities = relationship("City", backref="state", cascade='all, delete-orphan')
+    else:
+        @property
+        def cities(self):
+            from models import storage
+            c_instances = storage.all(City).values()
+            m_cities = []
+            for i in c_instances:
+                if i.state_id == self.id:
+                    m_cities.append(i)
+            return m_cities
