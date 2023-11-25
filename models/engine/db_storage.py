@@ -3,7 +3,7 @@
 file storage for hbnb clone with a databasae"""
 from sqlalchemy import create_engine
 from os import getenv
-from sqlalchemy.orm import metadata, sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
 
 
@@ -25,7 +25,7 @@ class DBStorage:
         self.__engine = create_engine(cone_str, pool_pre_ping=True)
 
         if getenv('HBNB_ENV') == 'test':
-            metadata.drop_all(self.__engine)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """Retun instances of a given class or all classes"""
