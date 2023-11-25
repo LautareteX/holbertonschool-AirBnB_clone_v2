@@ -3,7 +3,8 @@
 file storage for hbnb clone with a databasae"""
 from sqlalchemy import create_engine
 from os import getenv
-from sqlalchemy.orm import metadata, sessionmaker
+from sqlalchemy.orm import metadata, sessionmaker, scoped_session
+from models.base_model import Base
 
 
 class DBStorage:
@@ -47,3 +48,27 @@ class DBStorage:
                         obj.id
                     )] = obj
             return obj_dict
+
+    def new(self, obj):
+        self.__session.add(obj)
+
+    def save(self):
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        if obj is not None:
+            self.__session.delete(obj)
+
+    def reload(self):
+        from models.user import User
+        from models.city import City
+        from models.place import Place
+        from models.state import State
+        from models.review import Review
+        from models.amenity import Amenity
+        Base.metadata.create_all(self.__engine)
+        Session = scoped_session(sessionmaker(
+            bind=self.__engine,
+            expire_on_commit=False, 
+        ))
+        self.__session = Session()
