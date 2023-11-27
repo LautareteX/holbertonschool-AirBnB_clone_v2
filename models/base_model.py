@@ -5,8 +5,8 @@ from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 
-
 Base = declarative_base()
+
 
 class BaseModel:
     """A base class for all hbnb models"""
@@ -27,7 +27,6 @@ class BaseModel:
                 if key == 'updated_at' or key == 'created_at':
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 setattr(self, key, value)
-
 
     def __str__(self):
         """Returns a string representation of the instance"""
