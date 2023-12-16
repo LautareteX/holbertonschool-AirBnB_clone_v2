@@ -25,5 +25,13 @@ def c_text(text):
     return "C {}".format(text)
 
 
+@app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
+def python_text(text):
+    "script that starts a Flask web application"
+    text = text.replace('_', ' ')
+    return "Python {}".format(text)
+
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
