@@ -33,8 +33,14 @@ def python_text(text):
     return "Python {}".format(text)
 
 
-@app.route("/number/<int:n>")
-def display_html(n):
+@app.route('/number/<int:n>', strict_slashes=False)
+def is_number(n):
+    "script that starts a Flask web application"
+    return "{} is a number".format(n)
+
+
+@app.route('/number_template/<int:n>')
+def html_template(n):
     "script that starts a Flask web application"
     return render_template('5-number.html', n=n)
 
