@@ -72,3 +72,7 @@ class DBStorage:
             expire_on_commit=False,
         ))
         self.__session = Session()
+
+    def close(self):
+        """Retun instances of a given class or all classes"""
+        self.__session.close()
